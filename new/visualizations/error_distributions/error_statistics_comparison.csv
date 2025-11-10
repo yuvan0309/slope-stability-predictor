@@ -1,0 +1,11 @@
+Metric,Gradient Boosting,XGBoost
+Mean Error,0.0195,0.0112
+Std Dev,0.0811,0.0830
+Min Error,-0.1556,-0.1744
+Max Error,0.4041,0.3880
+Median Error,0.0061,0.0027
+25th Percentile,-0.0224,-0.0390
+75th Percentile,0.0602,0.0547
+Skewness,1.4328,1.1487
+Kurtosis,5.6544,4.4270
+Sample Size,73,73
