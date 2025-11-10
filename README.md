@@ -50,26 +50,85 @@ slope-stability-project/
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- **Python**: 3.8+ (3.13 recommended)
+- **Node.js**: 18+ 
+- **npm**: Latest version
+
 ### Option 1: Run Web Application
+
+#### Linux / macOS
 
 ```bash
 cd web-app
 
 # Automated setup
-./setup.sh
+bash setup.sh
 
-# Launch servers
-./run.sh
+# Launch servers (opens in separate terminals)
+bash run.sh
+
+# Open browser: http://localhost:3000
+```
+
+#### Windows
+
+```powershell
+cd web-app
+
+# Backend setup
+cd backend
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+
+# Frontend setup (in new terminal)
+cd ..\frontend
+npm install
+
+# Run backend (Terminal 1)
+cd backend
+.\venv\Scripts\activate
+python app.py
+
+# Run frontend (Terminal 2)
+cd frontend
+npm run dev
 
 # Open browser: http://localhost:3000
 ```
 
 ### Option 2: Train Models
 
+#### Linux / macOS
+
 ```bash
 cd new
 
-# Install dependencies (if needed)
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run full pipeline
+python main_pipeline.py
+
+# Or train specific models
+python train_models.py
+```
+
+#### Windows
+
+```powershell
+cd new
+
+# Create virtual environment
+python -m venv venv
+.\venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
 
 # Run full pipeline
@@ -131,8 +190,8 @@ python train_models.py
 
 ### ML Pipeline
 - Python 3.13
-- scikit-learn 1.5.0
-- XGBoost 2.0.0
+- scikit-learn 1.5.0+
+- XGBoost 2.0.0+
 - LightGBM 4.5.0
 - NumPy, Pandas
 - Matplotlib, Seaborn
@@ -141,6 +200,26 @@ python train_models.py
 - **Backend**: Flask 3.0.0, joblib
 - **Frontend**: Svelte 4.2.0, Vite 5.0.0, Axios 1.6.0
 - **Styling**: CSS custom properties, Inter font
+
+## 🔧 Platform-Specific Notes
+
+### Linux
+- Use `bash` to run shell scripts
+- Virtual environment activation: `source venv/bin/activate`
+- Python command: `python3` or `python`
+- Script execution: `bash setup.sh` or `./setup.sh`
+
+### Windows
+- Use PowerShell or Command Prompt
+- Virtual environment activation: `.\venv\Scripts\activate`
+- Python command: `python`
+- May need to set execution policy: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+- Shell scripts (.sh) won't work natively - follow manual setup steps above
+
+### macOS
+- Same as Linux instructions
+- May need to install Xcode Command Line Tools: `xcode-select --install`
+- Use `python3` command
 
 ## 📝 Documentation
 
