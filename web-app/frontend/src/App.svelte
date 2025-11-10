@@ -1,11 +1,13 @@
 <script>
   import PredictionForm from './components/PredictionForm.svelte';
+  import MultiLayerForm from './components/MultiLayerForm.svelte';
   import ResultsDisplay from './components/ResultsDisplay.svelte';
   import ModelInfo from './components/ModelInfo.svelte';
   
   let predictionResult = null;
   let isLoading = false;
   let selectedModel = 'gradient_boosting';
+  let useMultiLayer = true;  // Default to multi-layer mode
   
   function handlePrediction(event) {
     predictionResult = event.detail;
@@ -18,6 +20,11 @@
   function handleModelChange(event) {
     selectedModel = event.detail;
   }
+  
+  function toggleMode() {
+    useMultiLayer = !useMultiLayer;
+    predictionResult = null;  // Clear results when switching modes
+  }
 </script>
 
 <main class="app-container">
@@ -28,15 +35,40 @@
     </div>
   </header>
   
+  <div class="mode-toggle">
+    <button 
+      class="toggle-btn" 
+      class:active={useMultiLayer}
+      on:click={toggleMode}
+    >
+      🪨 Multi-Layer Mode
+    </button>
+    <button 
+      class="toggle-btn" 
+      class:active={!useMultiLayer}
+      on:click={toggleMode}
+    >
+      📊 Simple Mode
+    </button>
+  </div>
+  
   <div class="content-wrapper">
     <div class="main-content">
       <section class="prediction-section">
-        <PredictionForm 
-          bind:selectedModel={selectedModel}
-          on:prediction={handlePrediction}
-          on:loading={handleLoading}
-          on:modelChange={handleModelChange}
-        />
+        {#if useMultiLayer}
+          <MultiLayerForm 
+            bind:selectedModel={selectedModel}
+            on:prediction={handlePrediction}
+            on:loading={handleLoading}
+          />
+        {:else}
+          <PredictionForm 
+            bind:selectedModel={selectedModel}
+            on:prediction={handlePrediction}
+            on:loading={handleLoading}
+            on:modelChange={handleModelChange}
+          />
+        {/if}
       </section>
       
       {#if predictionResult}
@@ -86,6 +118,40 @@
     font-size: 1rem;
     opacity: 0.9;
     font-weight: 400;
+  }
+  
+  .mode-toggle {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .toggle-btn {
+    padding: 12px 24px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #64748b;
+  }
+  
+  .toggle-btn:hover {
+    border-color: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+  }
+  
+  .toggle-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
   }
   
   .content-wrapper {
